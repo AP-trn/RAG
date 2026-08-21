@@ -10,7 +10,7 @@ os.environ["AZURESEARCH_FIELDS_CONTENT_VECTOR"] = "text_vector"
 
 
 from langchain_community.vectorstores.azuresearch import AzureSearch
-from app.embedding import embeddings
+from app.core.embedding import embeddings
 
 vector_store = AzureSearch(
     azure_search_endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
