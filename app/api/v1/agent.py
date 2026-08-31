@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from langchain_core.messages import HumanMessage
 
 from app.agent.graph import graph_agent
+from app.core.config import settings
 from app.sample.query import QueryRequest, QueryResponse
 
 logger = logging.getLogger(__name__)
@@ -19,10 +20,10 @@ async def query_agent(request: QueryRequest):
     try:
         inputs = {"messages": [HumanMessage(content=request.question)]}
 
-        # Configurable recursion limit prevents infinite feedback loops
+       
         result = await graph_agent.ainvoke(
             inputs,
-            config={"recursion_limit": 25},
+            config={"recursion_limit": settings.RECURSION_LIMIT},
         )
 
         final_message = result["messages"][-1]

@@ -1,4 +1,5 @@
 from typing import Literal
+from app.core.config import settings
 from app.agent.state import AgentState
 
 def route_guardrail(state: AgentState) -> Literal["rewrite", "direct_response"]:

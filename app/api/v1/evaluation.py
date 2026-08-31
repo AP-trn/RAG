@@ -9,7 +9,8 @@ from ragas.metrics import (faithfulness, answer_relevancy, context_precision, co
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 
-from app.core.llm import llm, embeddings
+from app.core.llm import llm
+from app.core.embedding import embeddings
 from app.agent.graph import graph_agent
 
 

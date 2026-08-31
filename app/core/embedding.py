@@ -1,15 +1,17 @@
 import os
+from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+from app.core.config import settings
 from dotenv import load_dotenv
-from langchain_openai import AzureOpenAIEmbeddings
+
 
 load_dotenv()
 
 
 raw_embeddings = AzureOpenAIEmbeddings(
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    azure_deployment=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+    azure_deployment=settings.AZURE_OPENAI_EMBEDDING_DEPLOYMENT,
+    openai_api_version=settings.AZURE_OPENAI_API_VERSION,
+    azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
+    api_key=settings.AZURE_OPENAI_API_KEY,
 )
 
 class PureFloatAzureEmbeddings:

@@ -7,14 +7,13 @@ from azure.ai.documentintelligence.models import (
     DocumentContentFormat
 )
 
-load_dotenv()
+from app.core.config import settings
 
-endpoint = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT")
-api_key = os.getenv("AZURE_DOCUMENT_INTELLIGENCE_KEY")
+
 
 di_client = DocumentIntelligenceClient(
-    endpoint=endpoint, 
-    credential=AzureKeyCredential(api_key)
+    endpoint=settings.AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT,
+    credential=AzureKeyCredential(settings.AZURE_DOCUMENT_INTELLIGENCE_KEY),
 )
 
 def analyze_pdf_bytes(file_bytes: bytes) -> str:
