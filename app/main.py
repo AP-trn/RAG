@@ -3,6 +3,7 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
 from app.api.v1.router import api_v1_router
 
 logging.basicConfig(level=logging.INFO)
@@ -36,17 +37,17 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="Knowledge Assistant API",
+        title=settings.APP_NAME,
         version="1.0.0",
-        docs_url="/docs" if os.getenv("ENV") != "production" else None,
+        docs_url="/docs" if settings.APP_ENV.lower() != "production" else None,
         redoc_url=None,
         lifespan=lifespan,
     )
 
-    origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+    
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -55,7 +56,7 @@ def create_app() -> FastAPI:
     
     @app.get("/health", tags=["Health"], summary="Service Health Check")
     async def health():
-        return {"status": "ok"}
+        return {"status": "ok", "environment": settings.APP_ENV}
     app.include_router(api_v1_router)
     
     return app
